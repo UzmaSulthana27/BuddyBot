@@ -1,0 +1,640 @@
+/* ===== Global Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+  /* allow scrolling on small screens (was overflow: hidden) */
+  overflow: auto;
+  background: #f3f4f6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ===== Auth Container ===== */
+.auth-container {
+  min-height: 100vh;
+  width: 100vw;
+  background: rgb(34, 14, 49);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== Animated Background ===== */
+.auth-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: blob-float 10s ease-in-out infinite;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.blob-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,255,255,0.3), transparent);
+  top: -20%;
+  left: -15%;
+}
+
+.blob-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(168,85,247,0.4), transparent);
+  bottom: -15%;
+  right: -15%;
+  animation-delay: 3s;
+}
+
+.blob-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(236,72,153,0.3), transparent);
+  top: 40%;
+  left: 40%;
+  animation-delay: 6s;
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(50px, -50px) scale(1.08); }
+  66% { transform: translate(-50px, 50px) scale(0.94); }
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: grid-scroll 30s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes grid-scroll {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
+}
+
+/* ===== Auth Card - flexible & mobile-friendly ===== */
+.auth-card {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  max-width: 1100px;
+  /* make it flexible: don't fix height to 650px */
+  height: auto;
+  max-height: 95vh; /* cap so small screens can scroll within */
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  animation: card-entrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@keyframes card-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.auth-card-animating {
+  animation: card-pulse 0.3s ease;
+}
+
+@keyframes card-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.99); }
+}
+
+/* ===== Auth Left Side ===== */
+.auth-left {
+  /* use a flexible column that can collapse on smaller screens */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 1.5rem;
+  color: white;
+  position: relative;
+  background: linear-gradient(180deg, rgba(62,35,82,1) 0%, rgba(56,30,75,1) 100%);
+  overflow: hidden;
+}
+
+.auth-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 30% 50%, rgba(255,255,255,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(168,85,247,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.auth-left-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Robot section responsive */
+.robot-section {
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.robot-container {
+  width: 100%;
+  max-width: 340px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ensure canvas scales properly */
+.robot-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+/* Auth info */
+.auth-info {
+  width: 100%;
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+.auth-title {
+  font-size: 1.875rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  line-height: 1.2;
+  flex-wrap: wrap;
+}
+
+.sparkle-icon {
+  animation: sparkle-rotate 3s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.4));
+  flex-shrink: 0;
+}
+
+@keyframes sparkle-rotate {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.12); }
+}
+
+.auth-subtitle {
+  font-size: 1rem;
+  opacity: 0.95;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+/* Feature list - keep it compact */
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+  width: 100%;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.25s ease;
+  text-align: left;
+}
+
+.feature-item:hover {
+  transform: translateX(6px);
+  background: rgba(255,255,255,0.09);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.feature-icon {
+  width: 2.2rem;
+  height: 2.2rem;
+  min-width: 2.2rem;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: transform 0.25s ease;
+}
+
+.feature-item:hover .feature-icon {
+  transform: scale(1.06) rotate(4deg);
+}
+
+.feature-text h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.125rem;
+}
+
+.feature-text p {
+  font-size: 0.825rem;
+  opacity: 0.95;
+  line-height: 1.25;
+}
+
+/* ===== Auth Right Side (form) ===== */
+.auth-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.75rem 2rem;
+  background: #ffffff;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+}
+
+.auth-form-wrapper {
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.auth-logo {
+  position: relative;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  color: white;
+  box-shadow: 
+    0 8px 20px rgba(102,126,234,0.35),
+    0 0 0 6px rgba(102,126,234,0.08);
+  animation: logo-float 3s ease-in-out infinite;
+}
+
+@keyframes logo-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.auth-heading {
+  font-size: 1.875rem;
+  color: #1f2937;
+  margin-bottom: 0.375rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.auth-description {
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.form-container {
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.form-fade {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.auth-footer {
+  margin-top: 1rem;
+}
+
+.demo-notice {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #9ca3af;
+  padding: 0.65rem;
+  background: linear-gradient(135deg, rgba(102,126,234,0.04), rgba(118,75,162,0.04));
+  border-radius: 10px;
+  border: 1px solid rgba(102,126,234,0.08);
+  line-height: 1.4;
+}
+
+/* ===== Welcome Overlay ===== */
+.welcome-overlay {
+  position: fixed;
+  inset: 0;
+  background:  rgb(34, 14, 49);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fade-in 0.28s ease-out;
+}
+
+.welcome-content {
+  text-align: center;
+  color: white;
+  animation: scale-up 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes scale-up {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.welcome-icon {
+  width: 72px;
+  height: 72px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  border: 2px solid rgba(255,255,255,0.28);
+  animation: icon-spin 0.9s ease-out;
+}
+
+@keyframes icon-spin {
+  0% { transform: rotate(-140deg) scale(0.85); opacity: 0; }
+  100% { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+
+.welcome-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+  font-size: 0.95rem;
+  opacity: 0.95;
+  margin-bottom: 1.25rem;
+}
+
+.welcome-loader {
+  width: 160px;
+  height: 3px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.loader-bar {
+  height: 100%;
+  background: white;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* ===== Chat Container (main app) ===== */
+.chat-container {
+  height: 100vh;
+  display: flex;
+  background: #f3f4f6;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.chat-hidden {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.chat-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===== Scrollbar Styling (forms) ===== */
+.auth-right::-webkit-scrollbar {
+  width: 8px;
+}
+
+.auth-right::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.auth-right::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 6px;
+}
+
+.auth-right::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* ===== Responsive Breakpoints ===== */
+
+/* 1100px and below */
+@media (max-width: 1100px) {
+  .auth-card {
+    max-width: 1000px;
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .robot-container {
+    height: 260px;
+    max-width: 300px;
+  }
+  
+  .auth-title {
+    font-size: 1.625rem;
+  }
+  
+  .auth-heading {
+    font-size: 1.625rem;
+  }
+}
+
+/* 900px and below */
+@media (max-width: 900px) {
+  .auth-card {
+    max-width: 820px;
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .auth-left {
+    padding: 1.5rem;
+  }
+  
+  .auth-right {
+    padding: 1.5rem;
+  }
+  
+  .robot-container {
+    height: 220px;
+    max-width: 240px;
+  }
+  
+  .auth-title {
+    font-size: 1.5rem;
+  }
+  
+  .feature-list {
+    gap: 0.625rem;
+  }
+  
+  .feature-item {
+    padding: 0.7rem;
+  }
+}
+
+/* Tablets / small laptops: collapse visual to keep form visible */
+@media (max-width: 768px) {
+  .auth-card {
+    grid-template-columns: 1fr;
+    height: auto;
+    max-height: 95vh;
+    border-radius: 16px;
+  }
+  
+  /* hide left panel to prioritize form — robot is shown above form */
+  .auth-left {
+    width: 100%;
+    order: 0;
+    padding: 1rem;
+    align-items: center;
+  }
+  
+  .auth-left-content { max-width: 100%; }
+  .robot-container { height: 200px; max-width: 220px; margin: 0 auto 0.8rem; }
+  .feature-list { display: none; }
+  
+  .auth-right {
+    width: 100%;
+    order: 1;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  
+  .auth-form-wrapper { max-width: 100%; }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 0.5rem;
+  }
+  
+  .auth-card {
+    border-radius: 12px;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100vh;
+    overflow: auto;
+    display: block;
+  }
+  
+  /* Stacked flow: robot above form */
+  .auth-left {
+    display: flex;
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(180deg, rgba(62,35,82,1) 0%, rgba(56,30,75,1) 100%);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  
+  .robot-container {
+    height: 180px;
+    max-width: 180px;
+    margin: 0 auto 0.5rem;
+  }
+  
+  .auth-right {
+    padding: 0.9rem;
+  }
+  
+  .auth-heading { font-size: 1.4rem; }
+  .auth-title { font-size: 1.25rem; }
+  .welcome-title { font-size: 1.25rem; }
+  
+  /* make buttons & form inputs easier to tap */
+  input[type="text"], input[type="email"], input[type="password"], button {
+    font-size: 16px;
+    min-height: 44px;
+  }
+  
+  .feature-list { display: none; }
+}
+
+/* Accessibility / touch improvements */
+button, a, input {
+  -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+}
+
+/* Small utility: keep big blobs from overflowing on small screens */
+@media (max-width: 600px) {
+  .blob-1 { width: 420px; height: 420px; top: -30%; left: -30%; filter: blur(80px); opacity: 0.35; }
+  .blob-2 { width: 320px; height: 320px; bottom: -30%; right: -30%; animation-delay: 2s; opacity: 0.28; }
+  .blob-3 { display: none; }
+}
+
+/* ensure robot canvas is usable on very short screens (keyboard open) */
+@media (max-height: 600px) {
+  .robot-container { height: 140px; max-width: 160px; }
+}
