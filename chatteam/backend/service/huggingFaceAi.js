@@ -11,6 +11,9 @@ class HuggingFaceAI {
   }
 
   async getResponse(userMessage) {
+    if (!this.apiKey) {
+      return this.getDemoResponse(userMessage);
+    }
     try {
       const response = await axios.post(
         `https://api-inference.huggingface.co/models/${this.models.chat}`,

@@ -55,5 +55,5 @@ async function saveMessage(channelId, userId, content, isAi = false, isFile = fa
   }
 }
 
+router.saveMessage = saveMessage;
 module.exports = router;
-module.exports.saveMessage = saveMessage;
