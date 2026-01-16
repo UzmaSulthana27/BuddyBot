@@ -55,8 +55,16 @@ router.post('/signup', async (req, res) => {
 
     // Create default channels
     await db.query(
-      'INSERT INTO channels (name, team_id, is_ai_enabled) VALUES (?, ?, ?), (?, ?, ?), (?, ?, ?)',
-      ['general', teamId, false, 'random', teamId, false, 'ai-help', teamId, true]
+      'INSERT INTO channels (name, team_id, is_ai_enabled) VALUES (?, ?, ?)',
+      ['general', teamId, false]
+    );
+    await db.query(
+      'INSERT INTO channels (name, team_id, is_ai_enabled) VALUES (?, ?, ?)',
+      ['random', teamId, false]
+    );
+    await db.query(
+      'INSERT INTO channels (name, team_id, is_ai_enabled) VALUES (?, ?, ?)',
+      ['ai-help', teamId, true]
     );
 
     // Generate JWT token

@@ -3,7 +3,7 @@ import { useAuth } from './context/AuthContext.jsx';
 import { useChat } from './hooks/useChat';
 import Robot3D from './components/auth/Robot3D.jsx';
 import LoginForm from './components/auth/LoginForm.jsx';
-import SignupForm from './components/auth/SignUpForm.jsx';
+import SignupForm from './components/auth/SignupForm.jsx';
 import Sidebar from './components/chat/SideBar.jsx';
 import ChatArea from './components/chat/ChatArea.jsx';
 import CreateTeamModal from './components/modals/CreateTeamModal.jsx';
